@@ -10,6 +10,7 @@ bin           = @[
   "sample_002_keyevent",
   "sample_003_draw_image",
   "sample_004_move_image",
+  "sample_005_move_image_with_keyevent",
   ]
 binDir        = "bin"
 

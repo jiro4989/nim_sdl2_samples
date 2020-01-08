@@ -6,7 +6,7 @@ var
   window: WindowPtr
   render: RendererPtr
 
-window = createWindow("sample_004_move_image.nim", 100, 100, 640,480, SDL_WINDOW_SHOWN)
+window = createWindow("sample_005_move_image_with_keyevent.nim", 100, 100, 640,480, SDL_WINDOW_SHOWN)
 render = createRenderer(window, -1, Renderer_Accelerated or Renderer_PresentVsync or Renderer_TargetTexture)
 
 var
@@ -28,6 +28,29 @@ while runGame:
       runGame = false
       break
 
+    # ========================================
+    # begin new code
+    # ========================================
+    case evt.kind
+    of KeyDown:
+      let scancode = evt.key.keysym.scancode
+      case scancode
+      of SDL_SCANCODE_UP:
+        dec(y, 10)
+      of SDL_SCANCODE_RIGHT:
+        inc(x, 10)
+      of SDL_SCANCODE_DOWN:
+        inc(y, 10)
+      of SDL_SCANCODE_LEFT:
+        dec(x, 10)
+      else:
+        discard
+    else:
+      discard
+    # ========================================
+    # end new code
+    # ========================================
+
   render.setDrawColor 0,0,0,255
   render.clear
 
@@ -44,19 +67,6 @@ while runGame:
 
   render.present
   fpsman.delay
-  # ========================================
-  # begin new code
-  # ========================================
-  inc(x, 10)
-  inc(y, 5)
-  if 200 < x:
-    x = 0
-  if 200 < y:
-    y = 0
-  # ========================================
-  # end new code
-  # ========================================
 
 destroy render
 destroy window
-
