@@ -9,6 +9,7 @@ bin           = @[
   "sample_001_window",
   "sample_002_keyevent",
   "sample_003_draw_image",
+  "sample_004_move_image",
   ]
 binDir        = "bin"
 

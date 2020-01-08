@@ -6,7 +6,7 @@ var
   window: WindowPtr
   render: RendererPtr
 
-window = createWindow("sample_003_draw_image.nim", 100, 100, 640,480, SDL_WINDOW_SHOWN)
+window = createWindow("sample_004_move_image.nim", 100, 100, 640,480, SDL_WINDOW_SHOWN)
 render = createRenderer(window, -1, Renderer_Accelerated or Renderer_PresentVsync or Renderer_TargetTexture)
 
 var
@@ -18,6 +18,9 @@ fpsman.init
 # new code
 let texture = render.loadTexture("assets/hello_world.png")
 
+var
+  x, y: cint
+
 while runGame:
   while pollEvent(evt):
     if evt.kind == QuitEvent:
@@ -27,12 +30,9 @@ while runGame:
   render.setDrawColor 0,0,0,255
   render.clear
 
-  # ========================================
-  # begin new code
-  # ========================================
   var
     src = rect(0, 0, 110, 22)
-    dst = rect(0, 0, 110, 22)
+    dst = rect(x, y, 110, 22)
   discard render.copyEx(texture,
     src,
     dst,
@@ -40,12 +40,16 @@ while runGame:
     center = nil,
     flip = SDL_FLIP_NONE,
     )
-  # ========================================
-  # end new code
-  # ========================================
 
   render.present
   fpsman.delay
+  x += 10
+  y += 5
+  if 200 < x:
+    x = 0
+  if 200 < y:
+    y = 0
 
 destroy render
 destroy window
+
